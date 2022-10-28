@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:memomemo/database/data_form.dart';
 import 'package:memomemo/database/db_crud.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class WritePage extends StatelessWidget {
   WritePage({Key? key}) : super(key: key);
@@ -49,19 +51,22 @@ class WritePage extends StatelessWidget {
   }
 
   Future<void> saveDB() async{
-    print('xxxx');
     DBHelper sd=DBHelper();
-    print('yyyy');
     var fido=Memo(
-      id:3,
+      id:Str2Sha512(DateTime.now().toString()),
       title:this.title,
       text:this.text,
       createTime: DateTime.now().toString(),
       editTime: DateTime.now().toString(),
     );
-    print('zzzz');
+    // print('zzzz');
     await sd.insertMemo(fido);
-    print('aaaa');
-    print(await sd.memos());
+    print('THE ANSWER IS ${await sd.memos()}');
+  }
+  
+  String Str2Sha512(String text){
+    var bytes=utf8.encode(text);
+    var digest=sha512.convert(bytes);
+    return digest.toString();
   }
 }

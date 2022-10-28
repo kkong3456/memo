@@ -13,7 +13,7 @@ class DBHelper{
       join(await getDatabasesPath(),'memos.db'),
       onCreate: (db,version){
         return db.execute(
-          "CREATE TABLE memos(id INTEGER PRIMARY KEY,title TEXT,text TEXT,createTime TEXT,editTime TEXT)",
+          "CREATE TABLE memos(id TEXT PRIMARY KEY,title TEXT,text TEXT,createTime TEXT,editTime TEXT)",
         );
       },
       version:1,
@@ -35,10 +35,12 @@ class DBHelper{
 
   Future<List<Memo>> memos() async{
     final db=await database;
+    print('ccc');
     final List<Map<String,dynamic>> maps=await db.query('memos');
     return List.generate(maps.length,(i){
+      print('ddd');
       return Memo(
-        id:int.parse(maps[i]['id']),
+        id:maps[i]['id'],
         title:maps[i]['title'],
         text:maps[i]['text'],
         createTime: maps[i]['createTime'],
@@ -57,7 +59,7 @@ class DBHelper{
     );
   }
 
-  Future<void> deleteMemo(int id) async{
+  Future<void> deleteMemo(String id) async{
     final db=await database;
     await db.delete(
       TableName,
