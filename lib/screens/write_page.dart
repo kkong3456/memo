@@ -59,7 +59,7 @@ class WritePage extends StatelessWidget {
       createTime: DateTime.now().toString(),
       editTime: DateTime.now().toString(),
     );
-    // print('zzzz');
+    print('zzzz');
     await sd.insertMemo(fido);
     print('THE ANSWER IS ${await sd.memos()}');
   }
