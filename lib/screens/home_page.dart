@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:memomemo/screens/write_page.dart';
 import 'package:memomemo/database/data_form.dart';
 import 'package:memomemo/database/db_crud.dart';
+import 'package:memomemo/screens/view_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -64,7 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (context, index) {
             Memo memo = snap.data[index];
             return InkWell(
-              onTap: (){print(memo.id);},
+              onTap: (){
+                Navigator.push(parentContext,CupertinoPageRoute(
+                  builder:(parentContext)=>ViewPage(id:memo.id)
+                ));
+              },
               onDoubleTap: () {
                 setState((){
                   deleteId= memo.id ?? "1";
