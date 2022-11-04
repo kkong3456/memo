@@ -13,6 +13,7 @@ class WritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text('write_page.dart'), actions: [
         IconButton(
           icon: const Icon(Icons.delete),

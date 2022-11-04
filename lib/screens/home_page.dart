@@ -15,7 +15,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String deleteId='';
+  String deleteId = '';
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +65,15 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (context, index) {
             Memo memo = snap.data[index];
             return InkWell(
-              onTap: (){
-                Navigator.push(parentContext,CupertinoPageRoute(
-                  builder:(parentContext)=>ViewPage(id:memo.id)
-                ));
+              onTap: () {
+                Navigator.push(
+                    parentContext,
+                    CupertinoPageRoute(
+                        builder: (parentContext) => ViewPage(id: memo.id)));
               },
               onDoubleTap: () {
-                setState((){
-                  deleteId= memo.id ?? "1";
+                setState(() {
+                  deleteId = memo.id ?? "1";
                   showAlertDialog(parentContext);
                 });
               },
@@ -84,7 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.blue, width: 1),
-                  boxShadow:const [BoxShadow(color:Colors.blue,blurRadius: 3)],
+                  boxShadow: const [
+                    BoxShadow(color: Colors.blue, blurRadius: 3)
+                  ],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -95,12 +98,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(memo.title ?? '',
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500)),
+                        Text(
+                          memo.title ?? '',
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         Text(
                           memo.text ?? '',
                           style: const TextStyle(fontSize: 15),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -126,35 +134,32 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void showAlertDialog(BuildContext context) async{
+  void showAlertDialog(BuildContext context) async {
     await showDialog(
-        context:context,
+        context: context,
         barrierDismissible: false,
-        builder: (BuildContext context){
+        builder: (BuildContext context) {
           return AlertDialog(
-            title:const Text('삭제 경고'),
-            content:const Text('정말 삭제하시겠습니까?\n 삭제된 메모는 복구되지 않습니다.'),
+            title: const Text('삭제 경고'),
+            content: const Text('정말 삭제하시겠습니까?\n 삭제된 메모는 복구되지 않습니다.'),
             actions: [
               ElevatedButton(
-                  onPressed: (){
-                    Navigator.pop(context,'삭제');
-                    setState((){
+                  onPressed: () {
+                    Navigator.pop(context, '삭제');
+                    setState(() {
                       deleteMemo(deleteId);
                     });
                   },
-                  child: const Text('삭제')
-              ),
+                  child: const Text('삭제')),
               ElevatedButton(
-                  onPressed: (){
-                    deleteId='';
-                    Navigator.pop(context,'취소');
+                  onPressed: () {
+                    deleteId = '';
+                    Navigator.pop(context, '취소');
                   },
-                  child: const Text('취소')
-              )
+                  child: const Text('취소'))
             ],
           );
-        }
-    );
+        });
   }
 }
 
@@ -165,10 +170,6 @@ Future<List<Memo>> loadMemo() async {
 
 Future<void> deleteMemo(String id) async {
   print('xxx');
-  DBHelper sd=DBHelper();
+  DBHelper sd = DBHelper();
   sd.deleteMemo(id);
 }
-
-
-
-
